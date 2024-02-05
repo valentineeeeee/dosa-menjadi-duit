@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dosa Converter</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 20px;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .input-container {
+        text-align: center;
+      }
+
+      label {
+        font-size: 18px;
+      }
+
+      input[type="number"],
+      input[type="tel"] {
+        padding: 10px;
+        font-size: 16px;
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+      }
+
+      select {
+        padding: 10px;
+        font-size: 16px;
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+      }
+
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      #result {
+        font-size: 24px;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="input-container">
+      <table>
+        <tr>
+          <th colspan="2">Ubah dosa anda menjadi saldo dompet digital</th>
+        </tr>
+        <tr>
+          <td><label for="dosaInput">Dosa anda :</label></td>
+          <td>
+            <input type="number" id="dosaInput" name="dosaInput" required />
+          </td>
+        </tr>
+        <tr>
+          <td><label for="phoneNumberInput">Nomor HP :</label></td>
+          <td>
+            <input
+              type="tel"
+              id="phoneNumberInput"
+              name="phoneNumberInput"
+              pattern="[0-9]{10,14}"
+              required
+            />
+          </td>
+        </tr>
+        <tr>
+          <td><label for="paymentMethod">Tujuan :</label></td>
+          <td>
+            <select id="paymentMethod" name="paymentMethod">
+              <option value="gopay">GoPay</option>
+              <option value="dana">Dana</option>
+              <option value="ShopeePay">ShopeePay</option>
+              <option value="Ovo">Ovo</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <button type="button" onclick="calculateSum()">Submit</button>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" id="result"></td>
+        </tr>
+      </table>
+    </div>
+
+    <script>
+      function calculateSum() {
+        var dosaInput = document.getElementById("dosaInput").value;
+        var phoneNumberInput =
+          document.getElementById("phoneNumberInput").value;
+        var paymentMethod = document.getElementById("paymentMethod").value;
+
+        if (isNaN(dosaInput)) {
+          alert("Masukkan angka yang valid.");
+          return;
+        }
+
+        if (!/^\d{10,14}$/.test(phoneNumberInput)) {
+          alert("Masukkan nomor HP yang valid (minimal 10 digit).");
+          return;
+        }
+
+        var multiplier =
+          paymentMethod === "gopay"
+            ? 3
+            : paymentMethod === "dana"
+            ? 4
+            : paymentMethod === "ShopeePay"
+            ? 2
+            : paymentMethod === "Ovo"
+            ? 5
+            : 1;
+        var result = parseInt(dosaInput) * multiplier;
+
+        document.getElementById("result").innerText =
+          "Selamat, Uang sebesar : " +
+          result.toLocaleString() +
+          " telah ditambahkan ke akun " +
+          paymentMethod +
+          " anda.";
+      }
+    </script>
+  </body>
+</html>
